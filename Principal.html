@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal & Department Dashboard - G Pulla Reddy Engineering College</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --brand-color: #fc7228;
+            --academic-blue: #153243;
+            --academic-secondary: #284B63;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ================= INSTITUTION BRANDING ================= */
+        .brand-banner {
+            border-bottom: 3px solid var(--brand-color);
+            background-color: #ffffff;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        }
+
+        .brand-title {
+            color: var(--brand-color);
+            font-weight: 800;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ================= NAVIGATION ================= */
+        .navbar-custom {
+            background-color: var(--academic-blue);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-custom .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.5rem 1.1rem !important;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        .navbar-custom .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff !important;
+        }
+
+        /* ================= FILTER MODULES ================= */
+        .filter-card {
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-pill-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-pill-label {
+            position: relative;
+            cursor: pointer;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .status-pill-label input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .status-pill-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            border: 2px solid var(--border-color);
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .status-pill-label input[type="radio"]:checked + .status-pill-content {
+            border-color: var(--brand-color);
+            background-color: rgba(252, 114, 40, 0.06);
+            color: var(--brand-color);
+        }
+
+        .count-badge {
+            background-color: var(--academic-blue);
+            color: #ffffff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-pill-label input[type="radio"]:checked + .status-pill-content .count-badge {
+            background-color: var(--brand-color);
+        }
+
+        /* ================= TABLES ================= */
+        .card-table-container {
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .table-header-theme {
+            background-color: var(--academic-secondary) !important;
+            color: #ffffff !important;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .table-header-theme th {
+            background-color: var(--academic-secondary) !important;
+            color: #ffffff !important;
+            border-bottom: none;
+            padding: 1.1rem 1rem;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* ================= STATUS BADGES ================= */
+        .badge-progress {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            font-weight: 600;
+            padding: 0.4em 0.8em;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .badge-completed {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            font-weight: 600;
+            padding: 0.4em 0.8em;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* ================= DROPDOWN SELECTION ================= */
+        .custom-select {
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: var(--text-main);
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--brand-color);
+            box-shadow: 0 0 0 3px rgba(252, 114, 40, 0.15);
+        }
+
+        /* ================= DEPARTMENT BANNER ================= */
+        .dept-banner {
+            background: linear-gradient(135deg, #f8fafc, #edf2f7);
+            border-left: 5px solid var(--brand-color);
+            border-radius: 0.5rem;
+            padding: 1rem 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Institution Branding Banner -->
+    <div class="brand-banner mb-4">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div>
+                    <h1 class="brand-title">G Pulla Reddy Engineering College</h1>
+                    <div class="brand-subtitle"><i class="fa-solid fa-graduation-cap me-2"></i>Autonomous Institution</div>
+                </div>
+                <div class="text-md-end mt-2 mt-md-0">
+                    <span class="badge bg-dark text-white py-2 px-3 rounded-pill fw-semibold"><i class="fa-solid fa-user-shield me-2"></i>Administration Panel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand"><i class="fa-solid fa-folder-tree me-2"></i>College Task Management</span>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#dashboardNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="dashboardNavbar">
+                    <ul class="navbar-nav gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createtask"><i class="fa-solid fa-circle-plus me-1"></i> Create Task</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createdTasks"><i class="fa-solid fa-clipboard-list me-1"></i> Created Tasks</a>
+                        </li>
+
+                        {% if power == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createcommittee"><i class="fa-solid fa-users-gear me-1"></i> Create Committee</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/myTasks"><i class="fa-solid fa-list-check me-1"></i> My Tasks</a>
+                        </li>
+                        {% endif %}
+
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Filter & Department Selection Card -->
+        <div class="filter-card p-4 mb-4">
+            <div class="row align-items-center g-4">
+
+                <!-- Status Radios Styled as Action Pills -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="status-pill-group">
+                        <label class="status-pill-label">
+                            <input type="radio" name="status" value="2" checked>
+                            <div class="status-pill-content">
+                                <span><i class="fa-solid fa-inbox me-2"></i>Total Assigned</span>
+                                <span id="totalCount" class="count-badge">{{ assigned }}</span>
+                            </div>
+                        </label>
+
+                        <label class="status-pill-label">
+                            <input type="radio" name="status" value="0">
+                            <div class="status-pill-content">
+                                <span><i class="fa-solid fa-spinner fa-spin-pulse me-2"></i>Ongoing</span>
+                                <span id="ongoingCount" class="count-badge">{{ ongoing }}</span>
+                            </div>
+                        </label>
+
+                        <label class="status-pill-label">
+                            <input type="radio" name="status" value="1">
+                            <div class="status-pill-content">
+                                <span><i class="fa-solid fa-circle-check me-2"></i>Completed</span>
+                                <span id="completedCount" class="count-badge">{{ completed }}</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Department Selector -->
+                <div class="col-xl-4 col-lg-5 text-md-end">
+                    {% if power == 2 %}
+                    <div class="d-inline-flex flex-column align-items-start text-start w-100">
+                        <label for="department" class="form-label fw-bold text-muted small text-uppercase mb-2"><i class="fa-solid fa-building me-1"></i> Filter Department</label>
+                        <select id="department" class="form-select custom-select w-100">
+                            <option value="all">All Departments</option>
+                            <option value="CSE">CSE</option>
+                            <option value="CSM">CSM</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="MECH">MECH</option>
+                        </select>
+                    </div>
+                    {% endif %}
+
+                    {% if power == 1 %}
+                    <input type="hidden" id="department" value="{{ dept }}">
+                    <div class="dept-banner text-start">
+                        <span class="text-uppercase text-muted fw-bold small"><i class="fa-solid fa-building me-1"></i> Department Unit</span>
+                        <h5 class="fw-bold text-dark mt-1 mb-0">
+                            {% if dept == "cse" %}
+                                Computer Science & Engineering
+                            {% elif dept == "csm" %}
+                                Computer Science & Machine Learning
+                            {% elif dept == "ece" %}
+                                Electronics & Communication Engineering
+                            {% elif dept == "eee" %}
+                                Electrical & Electronics Engineering
+                            {% endif %}
+                        </h5>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Task Monitoring Grid Card -->
+        <div class="card-table-container">
+            <div class="table-responsive">
+                <table class="table mb-0 align-middle">
+                    <thead class="table-header-theme">
+                        <tr>
+                            <th scope="col" width="5%">ID</th>
+                            <th scope="col" width="12%">Task Name</th>
+                            <th scope="col" width="8%">Faculty ID</th>
+                            <th scope="col" width="12%">Faculty Name</th>
+                            <th scope="col" width="10%">Department</th>
+                            <th scope="col" width="10%">Created On</th>
+                            <th scope="col" width="10%">Updated On</th>
+                            <th scope="col" width="10%">Status</th>
+                            <th scope="col" width="13%">Other Info</th>
+                            <th scope="col" width="10%">Deadline</th>
+                            <th scope="col" width="10%">Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        {% for task in total_tasks %}
+                        <tr>
+                            <td class="fw-bold">{{ task[0] }}</td>
+                            <td class="fw-bold text-dark">{{ task[1].capitalize() }}</td>
+                            <td><span class="text-secondary fw-semibold">{{ task[2] }}</span></td>
+                            <td>{{ task[3] }}</td>
+                            <td><span class="badge bg-light text-dark border px-2 py-1.5">{{ task[4] }}</span></td>
+                            <td class="text-muted small">{{ task[5] }}</td>
+                            <td class="text-muted small">{{ task[6] }}</td>
+                            <td>
+                                {% if task[7] == 0 %}
+                                    <span class="badge badge-progress"><i class="fa-solid fa-spinner fa-spin-pulse me-1"></i> Ongoing</span>
+                                {% else %}
+                                    <span class="badge badge-completed"><i class="fa-solid fa-circle-check me-1"></i> Completed</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-muted fst-italic small">{{ task[10].capitalize() }}</td>
+                            <td class="fw-semibold text-danger small">{{ task[8] }}</td>
+                            <td class="small text-secondary">{{ task[9] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Live Sync/Seggregation Script (Fully Integrable with Python backend) -->
+    <script>
+        const dept = document.getElementById("department");
+        const radios = document.querySelectorAll('input[name="status"]');
+
+        async function loadData() {
+            const selected = document.querySelector('input[name="status"]:checked');
+            const response = await fetch("/seggregate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    dept: dept.value,
+                    status: selected.value
+                })
+            });
+
+            const data = await response.json();
+            const count = data.count;
+            const tasks = data.tasks;
+            const tablebody = document.getElementById("tableBody");
+
+            tablebody.innerHTML = "";
+            for (const task of tasks) {
+                // Formatting values dynamically
+                const capitalizedName = task[1].charAt(0).toUpperCase() + task[1].slice(1);
+                const capitalizedInfo = task[10] ? (task[10].charAt(0).toUpperCase() + task[10].slice(1)) : "";
+
+                const statusBadge = task[7] == 0
+                    ? '<span class="badge badge-progress"><i class="fa-solid fa-spinner fa-spin-pulse me-1"></i> Ongoing</span>'
+                    : '<span class="badge badge-completed"><i class="fa-solid fa-circle-check me-1"></i> Completed</span>';
+
+                tablebody.innerHTML += `
+                    <tr>
+                        <td class="fw-bold">${task[0]}</td>
+                        <td class="fw-bold text-dark">${capitalizedName}</td>
+                        <td><span class="text-secondary fw-semibold">${task[2]}</span></td>
+                        <td>${task[3]}</td>
+                        <td><span class="badge bg-light text-dark border px-2 py-1.5">${task[4]}</span></td>
+                        <td class="text-muted small">${task[5]}</td>
+                        <td class="text-muted small">${task[6]}</td>
+                        <td>${statusBadge}</td>
+                        <td class="text-muted fst-italic small">${capitalizedInfo}</td>
+                        <td class="fw-semibold text-danger small">${task[8]}</td>
+                        <td class="small text-secondary">${task[9]}</td>
+                    </tr>
+                `;
+            }
+
+            const totalcount = document.getElementById("totalCount");
+            const ongoingcount = document.getElementById("ongoingCount");
+            const completedcount = document.getElementById("completedCount");
+
+            totalcount.textContent = count[0];
+            ongoingcount.textContent = count[1];
+            completedcount.textContent = count[2];
+        }
+
+        dept.addEventListener("change", loadData);
+        for (const radio of radios) {
+            radio.addEventListener("change", loadData);
+        }
+    </script>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

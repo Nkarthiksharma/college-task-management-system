@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Login - G Pulla Reddy Engineering College</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Using your specific brand color as the primary accent */
+            --brand-color: #fc7228;
+            --brand-hover: #e05c15;
+            --bg-color: #f0f2f5;
+            --text-dark: #2c3e50;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        /* ================= LOGIN CARD ================= */
+        .login-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem;
+            border-top: 5px solid var(--brand-color);
+        }
+
+        /* ================= BRANDING ================= */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-icon {
+            color: var(--brand-color);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .college-title {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+        }
+
+        .college-subtitle {
+            color: #6c757d;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= FORM ELEMENTS ================= */
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+            color: #6c757d;
+        }
+
+        .form-control {
+            border-left: none;
+            padding-left: 0;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #dee2e6;
+        }
+
+        /* Focus state for the whole input group */
+        .input-group:focus-within .input-group-text,
+        .input-group:focus-within .form-control {
+            border-color: var(--brand-color);
+        }
+
+        /* ================= BUTTONS ================= */
+        .btn-brand {
+            background-color: var(--brand-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-brand:hover, .btn-brand:focus {
+            background-color: var(--brand-hover);
+            color: white;
+            box-shadow: 0 4px 12px rgba(252, 114, 40, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* ================= ALERTS ================= */
+        .alert-custom {
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container px-3">
+        <div class="row justify-content-center">
+            <div class="col-12 d-flex justify-content-center">
+
+                <div class="login-card">
+                    <!-- Header / Logo Area -->
+                    <div class="brand-header">
+                        <i class="fa-solid fa-building-columns brand-icon"></i>
+                        <h1 class="college-title">G Pulla Reddy</h1>
+                        <div class="college-subtitle">Engineering College (Autonomous)</div>
+                        <hr class="mt-4 mb-1 text-muted opacity-25">
+                        <p class="text-muted small mt-2 mb-0">Faculty & Staff Portal</p>
+                    </div>
+
+                    <!-- Incorrect Login Alert -->
+                    {% if password == "false" %}
+                        <div class="alert alert-danger alert-custom mb-4" role="alert">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <div>Incorrect Email or Password. Please try again.</div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Login Form -->
+                    <form action="/" method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
+                                <!-- Passing Bootstrap classes directly to the WTForms field -->
+                                {{ form.email(class="form-control", placeholder="Enter your email address") }}
+                            </div>
+                            <!-- Email Validation Errors -->
+                            {% for error in form.email.errors %}
+                                <div class="text-danger small mt-1 fw-medium">
+                                    <i class="fa-solid fa-circle-xmark me-1"></i>{{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            {{ form.password.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <!-- Passing Bootstrap classes directly to the WTForms field -->
+                                {{ form.password(class="form-control", placeholder="Enter your password") }}
+                            </div>
+                            <!-- Password Validation Errors -->
+                            {% for error in form.password.errors %}
+                                <div class="text-danger small mt-1 fw-medium">
+                                    <i class="fa-solid fa-circle-xmark me-1"></i>{{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-2">
+                            {{ form.submit(class="btn btn-brand btn-lg", value="Secure Login") }}
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

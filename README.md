@@ -76,3 +76,25 @@
 - Session Management
 - MySQL Database Integration
 - Responsive User Interface
+
+- ## 🛠 Tech Stack
+
+Backend
+- Python
+- Flask
+- PyMySQL
+
+Frontend
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+- Jinja2
+
+Database
+- MySQL
+
+Libraries
+- Flask-WTF
+- CKEditor
+- Select2

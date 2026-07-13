@@ -16,14 +16,14 @@ import time
 from flask_mail import Mail,Message
 app=Flask(__name__)
 app.permanent_session_lifetime = timedelta(days=7)
-app.config['SECRET_KEY']=""
-app.config["UPLOAD_FOLDER"]=""
+app.config['SECRET_KEY']="My secret key"
+app.config["UPLOAD_FOLDER"]="uploads"
 app.config["MAIL_SERVER"]="smtp.gmail.com"
 app.config["MAIL_PORT"]=587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = ""
-app.config["MAIL_PASSWORD"] = ""
-app.config["MAIL_DEFAULT_SENDER"] = ""
+app.config["MAIL_USERNAME"] = "karthikkvk292@gmail.com"
+app.config["MAIL_PASSWORD"] = "gbbcbedcioglrvbe"
+app.config["MAIL_DEFAULT_SENDER"] = "karthikkvk292@gmail.com"
 mail=Mail(app)
 
 ckeditor=CKEditor(app)

@@ -257,20 +257,17 @@
                             <a class="nav-link" href="/createtask"><i class="fa-solid fa-circle-plus me-1"></i> Create Task</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/createdTasks"><i class="fa-solid fa-clipboard-list me-1"></i> Created Tasks</a>
+                            <a class="nav-link" href="/createdTasks"><i class="fa-solid fa-clipboard-list me-1"></i>Tasks Created </a>
                         </li>
 
                         {% if power == 2 %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/createcommittee"><i class="fa-solid fa-users-gear me-1"></i> Create Committee</a>
-                        </li>
+
                         {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="/myTasks"><i class="fa-solid fa-list-check me-1"></i> My Tasks</a>
                         </li>
                         {% endif %}
 
-                       
                     </ul>
                 </div>
             </div>
@@ -294,7 +291,7 @@
                         <label class="status-pill-label">
                             <input type="radio" name="status" value="0">
                             <div class="status-pill-content">
-                                <span><i class="fa-solid fa-spinner fa-spin-pulse me-2"></i>Ongoing</span>
+                                <span><i class=></i>Ongoing</span>
                                 <span id="ongoingCount" class="count-badge">{{ ongoing }}</span>
                             </div>
                         </label>
@@ -359,9 +356,9 @@
                             <th scope="col" width="12%">Faculty Name</th>
                             <th scope="col" width="10%">Department</th>
                             <th scope="col" width="10%">Created On</th>
-                            <th scope="col" width="10%">Updated On</th>
+                            <th scope="col" width="10%">Report On</th>
                             <th scope="col" width="10%">Status</th>
-                            <th scope="col" width="13%">Other Info</th>
+                            <th scope="col" width="13%">Latest Info</th>
                             <th scope="col" width="10%">Deadline</th>
                             <th scope="col" width="10%">Created By</th>
                         </tr>
@@ -378,7 +375,7 @@
                             <td class="text-muted small">{{ task[6] }}</td>
                             <td>
                                 {% if task[7] == 0 %}
-                                    <span class="badge badge-progress"><i class="fa-solid fa-spinner fa-spin-pulse me-1"></i> Ongoing</span>
+                                    <span class="badge badge-progress"><i class="fa-regular fa-circle me-1" style="color:#f59e0b;"></i> Ongoing</span>
                                 {% else %}
                                     <span class="badge badge-completed"><i class="fa-solid fa-circle-check me-1"></i> Completed</span>
                                 {% endif %}
@@ -425,7 +422,7 @@
                 const capitalizedInfo = task[10] ? (task[10].charAt(0).toUpperCase() + task[10].slice(1)) : "";
 
                 const statusBadge = task[7] == 0
-                    ? '<span class="badge badge-progress"><i class="fa-solid fa-spinner fa-spin-pulse me-1"></i> Ongoing</span>'
+                    ? '<span class="badge badge-progress"><i class="fa-regular fa-circle me-1" style="color:#f59e0b;"></i>  Ongoing</span>'
                     : '<span class="badge badge-completed"><i class="fa-solid fa-circle-check me-1"></i> Completed</span>';
 
                 tablebody.innerHTML += `
